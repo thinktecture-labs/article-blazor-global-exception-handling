@@ -1,0 +1,23 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="_currentTheme"/>
+<MudSnackbarProvider/>
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudText Typo="Typo.h5">Global Exception Handling</MudText>
+        <MudAppBarSpacer/>
+        @if (_isDarkEnabled)
+        {
+            <MudIconButton Icon="@Icons.Material.Filled.WbSunny" Color="Color.Inherit" OnClick="DarkMode"/>
+        }
+        else
+        {
+            <MudIconButton Icon="@Icons.Material.Filled.BrightnessLow" Color="Color.Inherit" OnClick="DarkMode"/>
+        }
+    </MudAppBar>
+    <MudMainContent Class="pt-16 px-16">
+        <MudContainer Class="mt-6">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

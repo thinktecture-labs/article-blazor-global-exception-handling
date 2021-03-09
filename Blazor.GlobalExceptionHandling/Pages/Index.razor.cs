@@ -1,0 +1,22 @@
+using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+
+namespace Blazor.GlobalExceptionHandling.Pages
+{
+    public partial class Index
+    {
+        [Inject] public IJSRuntime _jsRuntime { get; set; }
+
+        private void ThrowUnhandledException()
+        {
+            throw new Exception("Unhandled .NET Core Exception is thrown");
+        }
+
+        private async Task ThrowJSException()
+        {
+            await _jsRuntime.InvokeVoidAsync("generateRejectedPromise");
+        }
+    }
+}
