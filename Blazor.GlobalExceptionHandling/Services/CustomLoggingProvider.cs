@@ -46,6 +46,11 @@ namespace Blazor.GlobalExceptionHandling.Services
             {
                 _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
             }
+            else
+            {
+                var message = formatter(state, exception);
+                Console.WriteLine($"Error occured: {message}");
+            }
         }
 
         public bool IsEnabled(LogLevel logLevel)
