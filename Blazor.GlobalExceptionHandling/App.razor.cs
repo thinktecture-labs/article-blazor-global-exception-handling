@@ -28,28 +28,5 @@ namespace Blazor.GlobalExceptionHandling
         {
             _snackbar.Add(message, Severity.Error);
         }
-
-        private static bool TryGetMessageFromJsError(object error, out string message)
-        {
-            message = String.Empty;
-            var t = error.GetType();
-            foreach (var propertyInfo in t.GetProperties())
-            {
-                Console.WriteLine($"Property: {propertyInfo.Name}");
-            }
-
-            var prop = t.GetProperty("message");
-            if (prop != null)
-            {
-                Console.WriteLine("Has property message");
-                var value = prop.GetValue(error);
-                if (value != null)
-                {
-                    message = value.ToString();
-                }
-            }
-
-            return false;
-        }
     }
 }

@@ -31,15 +31,13 @@
             console.log('DotNet is not available');
         }
     }
-
-    const exLog = console.error;
+    
     console.error = function (msg) {
-        exLog.apply(console, arguments);
         reportError(msg);
     }
 
     window.onunhandledrejection = event => {
-        reportError(event.reason.message);
+        reportError(event.reason);
     };
 
     window.generateRejectedPromise = () => {
