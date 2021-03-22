@@ -28,10 +28,14 @@ namespace Blazor.GlobalExceptionHandling
         [JSInvokable("HandleJSException")]
         public static async Task HandleJSException(JavaScriptException error)
         {
-            await OpenSnackbar(error.ErrorMessage);
             if (!Enum.TryParse(error.LogLevel, true, out LogLevel logLevel))
             {
                 logLevel = LogLevel.Error;
+            }
+
+            if (logLevel != LogLevel.Critical)
+            {
+                OpenSnackbar(error.ErrorMessage);
             }
 
             using var db = await _contextFactory.Create<LoggingDbContext>();
@@ -45,7 +49,7 @@ namespace Blazor.GlobalExceptionHandling
             await db.SaveChanges();
         }
 
-        private static async Task OpenSnackbar(string message)
+        private static void OpenSnackbar(string message)
         {
             _snackbar.Add(message, Severity.Error);
         }
