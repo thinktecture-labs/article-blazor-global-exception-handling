@@ -49,11 +49,6 @@ namespace Blazor.GlobalExceptionHandling.Shared
             _currentTheme = _defaultTheme;
         }
 
-        private void ToggleDrawer()
-        {
-            _open = !_open;
-        }
-
         private void DarkMode()
         {
             _isDarkEnabled = !_isDarkEnabled;

@@ -1,8 +1,8 @@
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Blazor.GlobalExceptionHandling.Services;
+using Blazor.IndexedDB.WebAssembly;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +20,7 @@ namespace Blazor.GlobalExceptionHandling
             builder.RootComponents.Add<App>("#app");
             builder.Services.AddScoped(
                 sp => new HttpClient {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)});
+            builder.Services.AddScoped<IIndexedDbFactory, IndexedDbFactory>();
             builder.Services.AddMudServices();
             builder.Services.AddMudBlazorResizeListener();
             builder.Services.AddMudBlazorSnackbar(config =>
@@ -33,17 +34,18 @@ namespace Blazor.GlobalExceptionHandling
                 config.ShowTransitionDuration = 500;
             });
 
-            CreateCustomLoggingProvider(builder);
+            CreateCustomLoggingProvider(builder.Logging);
 
             await builder.Build().RunAsync();
         }
 
-        private static void CreateCustomLoggingProvider(WebAssemblyHostBuilder builder)
+        private static void CreateCustomLoggingProvider(ILoggingBuilder builder)
         {
-            var navigationManager = builder.Services.Single(
-                s => s.ServiceType == typeof(NavigationManager)).ImplementationInstance as NavigationManager;
-            var customLoggerProvider = new CustomLoggingProvider(navigationManager);
-            builder.Logging.AddProvider(customLoggerProvider);
+            builder.Services.AddSingleton<ILoggerProvider, CustomLoggingProvider>(services =>
+            {
+                var navigationManager = services.GetService<NavigationManager>();
+                return new CustomLoggingProvider(navigationManager);
+            });
         }
     }
 }

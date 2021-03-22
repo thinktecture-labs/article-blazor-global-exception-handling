@@ -1,6 +1,6 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using MudBlazor;
 
@@ -9,27 +9,24 @@ namespace Blazor.GlobalExceptionHandling
     public partial class App
     {
         [Inject] public ISnackbar Snackbar { get; set; }
-        [Inject] public ILoggerProvider LoggerProvider { get; set; }
 
         private static ISnackbar _snackbar;
-        private static ILogger _logger;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             _snackbar = Snackbar ?? throw new ArgumentException(nameof(Snackbar));
-            _logger = LoggerProvider.CreateLogger(nameof(App));
-            base.OnInitialized();
+            await base.OnInitializedAsync();
         }
 
 
         [JSInvokable("HandleJSException")]
         public static void HandleJSException(string error)
         {
-            _logger.Log(LogLevel.Error, 0, error);
-            OpenDialog(error);
+            Console.WriteLine($"Add exception to handling. {error}");
+            OpenSnackbar(error);
         }
 
-        private static void OpenDialog(string message)
+        private static void OpenSnackbar(string message)
         {
             _snackbar.Add(message, Severity.Error);
         }

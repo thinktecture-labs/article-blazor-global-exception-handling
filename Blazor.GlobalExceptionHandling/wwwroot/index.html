@@ -21,8 +21,6 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-<script src="_framework/blazor.webassembly.js"></script>
-<script src="_content/MudBlazor/MudBlazor.min.js"></script>
 <script>
     function reportError(error) {
         if (DotNet) {
@@ -31,19 +29,22 @@
             console.log('DotNet is not available');
         }
     }
-    
-    console.error = function (msg) {
+
+    /*console.error = function (msg) {
         reportError(msg);
-    }
+    }*/
 
     window.onunhandledrejection = event => {
-        reportError(event.reason);
+        reportError(event.reason.message);
     };
 
     window.generateRejectedPromise = () => {
         Promise.reject(new Error("err"));
     };
 </script>
+<script src="_framework/blazor.webassembly.js"></script>
+<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+<script src="_content/TG.Blazor.IndexedDB/indexedDb.Blazor.js"></script>
 </body>
 
 </html>

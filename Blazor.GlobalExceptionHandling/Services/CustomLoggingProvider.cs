@@ -44,12 +44,7 @@ namespace Blazor.GlobalExceptionHandling.Services
         {
             if (logLevel == LogLevel.Critical)
             {
-                _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
-            }
-            else
-            {
-                var message = formatter(state, exception);
-                Console.WriteLine($"Error occured: {message}");
+                // _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
             }
         }
 
