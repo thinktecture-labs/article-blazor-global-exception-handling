@@ -1,17 +1,31 @@
 ﻿@page "/"
-<div style="display: flex; justify-content: center; align-items: center">
-    <MudCard>
+<div class="container">
+    <MudCard Class="bottom-space">
         <MudCardContent>
             <MudText>
                 Beim aktivieren dieses Buttons wird eine unhandled Exception im .NET-Code geworfen.
                 Nachdem die Exception geworfen wurde, wird die Seite neu geladen, da sie in diesem Zustand nicht weiter genutzt werden kann.
             </MudText>
-            <MudButton Style="margin-bottom: 12px" Variant="Variant.Filled" Color="Color.Primary" OnClick="ThrowUnhandledException">.Net-Code Exception</MudButton>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Class="bottom-space" Variant="Variant.Filled" Color="Color.Primary" OnClick="ThrowUnhandledException">
+                <span class="info">.Net-Code Exception</span>
+                <MudIcon Icon="@Icons.Material.Filled.Update"></MudIcon>
+            </MudButton>
+        </MudCardActions>
+    </MudCard>
+    <MudCard Class="bottom-space">
+        <MudCardContent>
             <MudText>
                 Beim aktivieren dieses Buttons wird eine unhandled Exception im JavaScript-Code geworden.
                 Die Exception wird dann weiter an den .NET-Code gegeben, welcher diese dann als Notfication für den Nutzer darstellt.
             </MudText>
-            <MudButton Style="margin-bottom: 12px" Variant="Variant.Filled" Color="Color.Secondary" OnClick="ThrowJSException">Throw an unhandled .Net Exception</MudButton>
         </MudCardContent>
+        <MudCardActions>
+            <MudButton Class="bottom-space" Variant="Variant.Filled" Color="Color.Secondary" OnClick="ThrowJSException">
+                <span class="info">Throw an unhandled .Net Exception</span>
+                <MudIcon Icon="@Icons.Material.Filled.Message"></MudIcon>
+            </MudButton>
+        </MudCardActions>
     </MudCard>
 </div>

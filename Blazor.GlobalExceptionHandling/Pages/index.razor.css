@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+
+::deep .bottom-space {
+    margin-bottom: 12px
+}
+.info {
+    margin-right: 8px;
+}
