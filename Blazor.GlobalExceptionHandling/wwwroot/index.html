@@ -22,24 +22,28 @@
     <a class="dismiss">🗙</a>
 </div>
 <script>
-    function reportError(error) {
+    function reportError(error, level, destination) {
         if (DotNet) {
-            DotNet.invokeMethodAsync('Blazor.GlobalExceptionHandling', 'HandleJSException', error);
+            DotNet.invokeMethodAsync('Blazor.GlobalExceptionHandling', 'HandleJSException', {
+                errorMessage: error,
+                level: level,
+                logDestination: destination
+            });
         } else {
             console.log('DotNet is not available');
         }
     }
 
-    /*console.error = function (msg) {
-        reportError(msg);
-    }*/
+    console.error = function (msg) {
+        reportError(msg, 'Critical', 'Console');
+    }
 
     window.onunhandledrejection = event => {
-        reportError(event.reason.message);
+        reportError(event.reason.message, 'Error', 'JavaScript-Code');
     };
 
     window.generateRejectedPromise = () => {
-        Promise.reject(new Error("err"));
+        Promise.reject(new Error("Unbehandelte JavaScript Exception."));
     };
 </script>
 <script src="_framework/blazor.webassembly.js"></script>

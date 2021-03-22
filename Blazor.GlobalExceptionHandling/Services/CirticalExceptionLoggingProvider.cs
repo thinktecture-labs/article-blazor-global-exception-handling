@@ -5,13 +5,13 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Blazor.GlobalExceptionHandling.Services
 {
-    public class CustomLoggingProvider : ILoggerProvider
+    public class CirticalExceptionLoggingProvider : ILoggerProvider
     {
-        private CustomLogger _logger;
+        private CriticalExceptionLogger _logger;
 
-        public CustomLoggingProvider(NavigationManager navigationManager)
+        public CirticalExceptionLoggingProvider(NavigationManager navigationManager)
         {
-            _logger = new CustomLogger(navigationManager);
+            _logger = new CriticalExceptionLogger(navigationManager);
         }
 
         public void Dispose()
@@ -30,11 +30,11 @@ namespace Blazor.GlobalExceptionHandling.Services
         }
     }
 
-    public class CustomLogger : ILogger
+    public class CriticalExceptionLogger : ILogger
     {
         private readonly NavigationManager _navigationManager;
 
-        public CustomLogger(NavigationManager navigationManager)
+        public CriticalExceptionLogger(NavigationManager navigationManager)
         {
             _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
         }
@@ -42,9 +42,10 @@ namespace Blazor.GlobalExceptionHandling.Services
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
             Func<TState, Exception, string> formatter)
         {
+            // To continue using the UI the page must be reloaded after an unhandled exception with the LogLevel Critical was thrown
             if (logLevel == LogLevel.Critical)
             {
-                // _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
+                _navigationManager.NavigateTo(_navigationManager.Uri, true);
             }
         }
 

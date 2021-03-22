@@ -7,18 +7,13 @@ namespace Blazor.GlobalExceptionHandling.Models
     {
         public Guid Id { get; set; }
         public string ErrorMessage { get; set; }
-        public ErrorType ErrorType { get; set; }
+        public string Destination { get; set; }
         public LogLevel LogLevel { get; set; }
+        public DateTime Date { get; set; }
 
         public LogEntry()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
         }
-    }
-
-    public enum ErrorType
-    {
-        JavaScript,
-        DotNet
     }
 }
