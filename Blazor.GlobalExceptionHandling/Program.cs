@@ -41,10 +41,10 @@ namespace Blazor.GlobalExceptionHandling
 
         private static void CreateCustomLoggingProvider(ILoggingBuilder builder)
         {
-            builder.Services.AddSingleton<ILoggerProvider, CirticalExceptionLoggingProvider>(services =>
+            builder.Services.AddSingleton<ILoggerProvider, CriticalExceptionLoggingProvider>(services =>
             {
                 var navigationManager = services.GetService<NavigationManager>();
-                return new CirticalExceptionLoggingProvider(navigationManager);
+                return new CriticalExceptionLoggingProvider(navigationManager);
             });
         }
     }

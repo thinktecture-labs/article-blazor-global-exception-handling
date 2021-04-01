@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Blazor.GlobalExceptionHandling.Services
 {
-    public class CirticalExceptionLoggingProvider : ILoggerProvider
+    public class CriticalExceptionLoggingProvider : ILoggerProvider
     {
         private CriticalExceptionLogger _logger;
 
-        public CirticalExceptionLoggingProvider(NavigationManager navigationManager)
+        public CriticalExceptionLoggingProvider(NavigationManager navigationManager)
         {
             _logger = new CriticalExceptionLogger(navigationManager);
         }
@@ -45,7 +45,7 @@ namespace Blazor.GlobalExceptionHandling.Services
             // To continue using the UI the page must be reloaded after an unhandled exception with the LogLevel Critical was thrown
             if (logLevel == LogLevel.Critical)
             {
-                _navigationManager.NavigateTo(_navigationManager.Uri, true);
+                // _navigationManager.NavigateTo(_navigationManager.Uri, true);
             }
         }
 
